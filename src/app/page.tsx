@@ -69,23 +69,58 @@ import { createClient } from '@/lib/supabase/server'
 
 export default async function Home() {
   const supabase = await createClient()
-  const { data: products } = await supabase
-  .from('products')
-  .select(`
-    *,
-    categories(*),
-    styles(*),
-    product_variants(
-      *,
-      colors(*),
-      inventory(
-        *,
-        stores(*)
+
+  const { data: products, error } = await supabase
+    .from('products')
+    .select(`
+      id,
+      name,
+      slug,
+      price,
+      discount_percent,
+      price_after_discount,
+      is_featured,
+      categories ( id, name, slug ),
+      product_styles (
+        styles ( id, name, slug )
+      ),
+      product_images (
+        image_path,
+        sort_order
+      ),
+      product_variants (
+        id,
+        colors ( id, name, hex_code ),
+        sizes ( id, name ),
+        inventory (
+          quantity,
+          stores ( id, name )
+        )
       )
+    `)
+    .order('created_at', { ascending: false })
+
+  // Show error clearly if something is wrong
+  if (error) {
+    return (
+      <pre style={{ color: 'red', padding: '2rem' }}>
+        {JSON.stringify(error, null, 2)}
+      </pre>
     )
-  `)
+  }
+
+  // Show empty state clearly
+  if (!products || products.length === 0) {
+    return (
+      <p style={{ padding: '2rem' }}>
+        No products found. Run the seed SQL in Supabase first.
+      </p>
+    )
+  }
 
   return (
-    <pre>{JSON.stringify(products, null, 2)}</pre>
+    <pre style={{ padding: '2rem', fontSize: '13px' }}>
+      {JSON.stringify(products, null, 2)}
+    </pre>
   )
 }
