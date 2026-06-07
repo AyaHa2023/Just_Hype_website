@@ -93,13 +93,14 @@ export type AvailabilityState =
   variantId: string
   color: Color
   size: Size
-  price: number                         
-  userStoreId: 'tunis' | 'gabes'        
-  shippingStoreId: 'tunis' | 'gabes'    
-  shippingStoreName: string             
-  shippingStoreWhatsapp: string         
-  crossStore: boolean                   // true = +9 TND applies
-  image: string | null                  
+  price: number
+  quantity: number
+  userStoreId: 'tunis' | 'gabes'
+  shippingStoreId: 'tunis' | 'gabes'
+  shippingStoreName: string
+  shippingStoreWhatsapp: string
+  crossStore: boolean
+  image: string | null
 }
 
 export type CartCookieData = {

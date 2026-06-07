@@ -102,6 +102,7 @@ export function ProductDetailsPanel({ product }: ProductDetailsPanelProps) {
         variantId: `${product.id}-${selectedSize}-${selectedColor}`,
         color: selectedColorObj,
         size: selectedSizeObj,
+        quantity: 1, 
         userStoreId: (storeId as 'tunis' | 'gabes'),
         shippingStoreId: (shippingStoreId as 'tunis' | 'gabes'),
         shippingStoreName: storeInfo?.name || 'Boutique',
