@@ -100,6 +100,8 @@ export type AvailabilityState =
   shippingStoreName: string
   shippingStoreWhatsapp: string
   crossStore: boolean
+  transferFeePaid: boolean
+  transferPaymentRef?: string | null
   image: string | null
 }
 

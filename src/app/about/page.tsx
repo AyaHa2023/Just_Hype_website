@@ -2,10 +2,15 @@ import { Footer } from '@/components/layout/Footer'
 import { Header } from '@/components/layout/Header'
 import Image from 'next/image'
 
-export const metadata = {
-  title: 'Notre Histoire | Just Hype',
+import type { Metadata } from 'next'
+import { DEFAULT_KEYWORDS, SITE_URL } from '@/lib/seo'
+
+export const metadata: Metadata = {
+  title: 'Notre Histoire — Just Hype, marque mode homme Tunisie',
   description:
-    "Découvrez l'histoire de Just Hype et le parcours de Maher Hachana dans le prêt-à-porter en Tunisie.",
+    "Histoire de Just Hype, marque de vêtements pour hommes en Tunisie. Parcours de Maher Hachana depuis 1985 — Pantherose, Masculin, Just Hype.",
+  keywords: [...DEFAULT_KEYWORDS, 'histoire just hype', 'maher hachana'],
+  alternates: { canonical: `${SITE_URL}/about` },
 }
 
 const timeline = [

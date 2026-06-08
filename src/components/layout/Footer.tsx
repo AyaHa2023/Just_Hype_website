@@ -35,7 +35,13 @@ export function Footer() {
     const message = encodeURIComponent(
       ['Message client depuis le site Just Hype', '', trimmed, '', 'Merci de partager ce feedback avec toute l\'équipe Just Hype.'].join('\n')
     )
-    window.open(`https://wa.me/21658370800?text=${message}`, '_blank')
+
+    WHATSAPP_NUMBERS.forEach((contact, index) => {
+      window.setTimeout(() => {
+        window.open(`${contact.href}?text=${message}`, '_blank')
+      }, index * 300)
+    })
+
     setFeedbackMessage('')
     setShowNotice(true)
     window.setTimeout(() => setShowNotice(false), 5000)
@@ -46,7 +52,6 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-3 py-8 sm:px-4 md:px-8 md:py-10 lg:px-16">
         <div className="grid grid-cols-1 gap-7 md:grid-cols-[0.9fr_1.25fr_1fr] md:gap-9">
 
-          {/* col 1 — brand + nav + social */}
           <div>
             <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em]">Just Hype</p>
             <nav className="flex flex-col gap-2 text-sm text-gray-300">
@@ -76,23 +81,16 @@ export function Footer() {
             </div>
           </div>
 
-          {/* col 2 — boutiques */}
           <div>
             <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em]">Boutiques</p>
             <div className="grid gap-4 text-sm text-gray-300 sm:grid-cols-2">
               <address className="not-italic leading-relaxed">
                 <span className="block font-medium text-white">Grand Tunis</span>
                 28 Av. d'Afrique, Menzah 5<br />Ariana, Grand Tunis
-                <a href="https://wa.me/21658370802" className="mt-2 block text-white underline underline-offset-4 hover:text-gray-300 transition-colors">
-                  WhatsApp 58 370 802
-                </a>
               </address>
               <address className="not-italic leading-relaxed">
                 <span className="block font-medium text-white">Gabès</span>
                 154 Av. Farhat Hached<br />Beb Bhar, Centre Ville de Gabès
-                <a href="https://wa.me/21658370803" className="mt-2 block text-white underline underline-offset-4 hover:text-gray-300 transition-colors">
-                  WhatsApp 58 370 803
-                </a>
               </address>
             </div>
             <div className="mt-5 border-t border-gray-800 pt-4">
@@ -113,11 +111,10 @@ export function Footer() {
             </div>
           </div>
 
-          {/* col 3 — feedback */}
           <div>
             <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em]">Feedback</p>
             <p className="mb-3 text-sm leading-relaxed text-gray-300">
-              Questions, remarques ou suggestions ? Votre message sera envoyé via WhatsApp à l'équipe Just Hype.
+              Questions, remarques ou suggestions ? Votre message sera envoyé via WhatsApp aux boutiques Grand Tunis et Gabès.
             </p>
             <textarea
               value={feedbackMessage}
@@ -134,7 +131,7 @@ export function Footer() {
             </button>
             {showNotice && (
               <p className="mt-3 text-xs leading-relaxed text-gray-300">
-                Merci. Le message est prêt sur WhatsApp.
+                Merci. Deux conversations WhatsApp sont prêtes pour Grand Tunis et Gabès.
               </p>
             )}
           </div>

@@ -1,0 +1,27 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /*.json
+Disallow: /checkout/*
+Disallow: /panier
+Disallow: /paiement/
+
+Sitemap: https://justhype.tn/sitemap.xml
+
+# Google specific
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing specific
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+# AI crawlers for indexing
+User-agent: GPTBot
+Allow: /
+
+User-agent: CCBot
+Allow: /

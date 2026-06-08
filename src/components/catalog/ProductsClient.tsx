@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import { ProductGrid } from '@/components/catalog/ProductGrid'
 import { FiltersSidebar } from '@/components/catalog/FiltersSidebar'
 import type { Category, Product, Color, Size } from '@/types'
@@ -49,16 +49,22 @@ export function ProductsClient({
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
   const [selectedOptions, setSelectedOptions] = useState<string[]>([])
   const [filtersOpen, setFiltersOpen] = useState(false)
+  const [displayCount, setDisplayCount] = useState(12)
+  const loadMoreRef = useRef<HTMLDivElement>(null)
 
-  // sync when URL changes (server re-render passes new initialCategorie)
   useEffect(() => {
     queueMicrotask(() => {
       setSelectedCategorie(initialCategorie ?? null)
       setSelectedColors([])
       setSelectedSizes([])
       setSelectedOptions([])
+      setDisplayCount(12)
     })
   }, [initialCategorie])
+
+  useEffect(() => {
+    setDisplayCount(12)
+  }, [selectedCategorie, selectedColors, selectedSizes, selectedOptions])
 
   const topLevelCategories = categories.filter((c) => c.parent_id === null)
 
@@ -124,6 +130,23 @@ export function ProductsClient({
       return true
     })
   }, [products, selectedCategorie, selectedOptions, selectedColors, selectedSizes, categories, productAttributes])
+
+  useEffect(() => {
+    const node = loadMoreRef.current
+    if (!node || displayCount >= filtered.length) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setDisplayCount((prev) => Math.min(prev + 12, filtered.length))
+        }
+      },
+      { rootMargin: '200px', threshold: 0 }
+    )
+
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [filtered.length, displayCount])
 
   const hasActiveFilters =
     selectedColors.length > 0 ||
@@ -238,7 +261,14 @@ export function ProductsClient({
           )}
         </div>
       ) : (
-        <ProductGrid products={filtered} />
+        <>
+          <ProductGrid products={filtered.slice(0, displayCount)} />
+          {displayCount < filtered.length && (
+            <div ref={loadMoreRef} className="py-8 flex justify-center">
+              <p className="text-xs text-gray-400 tracking-widest uppercase">Chargement...</p>
+            </div>
+          )}
+        </>
       )}
 
       <FiltersSidebar

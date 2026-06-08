@@ -1,9 +1,19 @@
     import { createClient } from '@/lib/supabase/server'
+    import { Metadata } from 'next'
     import { Footer } from '@/components/layout/Footer'
     import { Header } from '@/components/layout/Header'
-    import { ScrollToTop } from '@/components/layout/ScrollToTop'
     import { ProductsClient } from '@/components/catalog/ProductsClient'
     import type { Category, Color, Product, Size } from '@/types'
+
+    export const metadata: Metadata = {
+      title: 'Tous les Produits | Just Hype',
+      description: 'Découvrez notre collection complète de vêtements pour hommes. Chemises, pantalons, costumes et plus. Livraison rapide en Tunisie.',
+      openGraph: {
+        title: 'Tous les Produits - Just Hype',
+        description: 'La plus grande sélection de vêtements masculins en Tunisie',
+        type: 'website',
+      },
+    }
 
     type ProductsClientProps = Parameters<typeof ProductsClient>[0]
 
@@ -90,7 +100,6 @@
     return (
         <main className="min-h-screen bg-white">
         <Header />
-        <ScrollToTop />
         <div className="pt-16 md:pt-20">
             <ProductsClient
             products={(products ?? []) as unknown as Product[]}
