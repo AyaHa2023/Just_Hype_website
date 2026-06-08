@@ -1,3 +1,4 @@
+//C:\Users\USER\Desktop\just_hype\src\lib\whatsapp.ts
 import type { CartItem } from '@/types'
 import { STORE_LABELS, STORE_WHATSAPP } from '@/lib/availability'
 import { formatPrice } from '@/lib/products'

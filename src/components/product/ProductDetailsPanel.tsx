@@ -1,3 +1,4 @@
+//C:\Users\USER\Desktop\just_hype\src\components\product\ProductDetailsPanel.tsx
 'use client'
 
 import { useState } from 'react'
@@ -460,18 +461,27 @@ export function ProductDetailsPanel({ product }: ProductDetailsPanelProps) {
       />
 
       <AppModal
-        open={successModal}
-        onClose={() => setSuccessModal(false)}
-        title="Ajouté au panier"
-        description="Votre article a été ajouté. Vous pouvez continuer vos achats ou passer commande."
-        actions={[
-          {
-            label: 'Continuer',
-            variant: 'primary',
-            onClick: () => setSuccessModal(false),
-          },
-        ]}
-      />
+  open={successModal}
+  onClose={() => setSuccessModal(false)}
+  title="Ajouté au panier"
+  description="Votre article a été ajouté. Vous pouvez continuer vos achats ou passer commande."
+  actions={[
+    {
+      label: 'Continuer les achats',
+      variant: 'secondary',
+      onClick: () => setSuccessModal(false),
+    },
+    {
+      label: 'Voir le panier',
+      icon: 'check',
+      variant: 'primary',
+      onClick: () => {
+        setSuccessModal(false)
+        window.location.href = '/panier'
+      },
+    },
+  ]}
+/>
 
       <AppModal
         open={!!alertModal}

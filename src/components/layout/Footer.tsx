@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-
+import Image from 'next/image'
 const FacebookIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
     <path d="M22 12a10 10 0 1 0-11.5 9.87v-6.99H7.9V12h2.6V9.8c0-2.57 1.54-4 3.9-4 1.13 0 2.32.2 2.32.2v2.55h-1.31c-1.29 0-1.69.8-1.69 1.62V12h2.88l-.46 2.88h-2.42v6.99A10 10 0 0 0 22 12z" />
@@ -53,7 +53,16 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-7 md:grid-cols-[0.9fr_1.25fr_1fr] md:gap-9">
 
           <div>
-            <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em]">Just Hype</p>
+            <div className="mb-3 flex flex-col gap-2">
+  <Image
+    src="/images/no_bg_logo.png"
+    alt="Just Hype"
+    width={62}
+      height={62}
+    className="object-contain invert opacity-70"
+  />
+  <p className="text-xs font-medium uppercase tracking-[0.3em]">Just Hype</p>
+</div>
             <nav className="flex flex-col gap-2 text-sm text-gray-300">
               <Link href="/about"    className="hover:text-white transition-colors">À propos</Link>
               <Link href="/produits" className="hover:text-white transition-colors">Catalogue</Link>

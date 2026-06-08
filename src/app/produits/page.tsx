@@ -1,4 +1,5 @@
-    import { createClient } from '@/lib/supabase/server'
+   //C:\Users\USER\Desktop\just_hype\src\app\produits\page.tsx
+   import { createClient } from '@/lib/supabase/server'
     import { Metadata } from 'next'
     import { Footer } from '@/components/layout/Footer'
     import { Header } from '@/components/layout/Header'

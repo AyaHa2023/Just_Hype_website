@@ -1,3 +1,4 @@
+//C:\Users\USER\Desktop\just_hype\src\components\catalog\ProductGrid.tsx
 'use client'
 
 import type { Product } from '@/types'

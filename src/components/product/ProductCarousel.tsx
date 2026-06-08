@@ -1,7 +1,9 @@
+// C:\Users\USER\Desktop\just_hype\src\components\product\ProductCarousel.tsx
 'use client'
 
 import { useState, useRef } from 'react'
 import Image from 'next/image'
+import { ImageLightbox } from '@/components/ui/ImageLightbox'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { getProductImageUrl } from '@/lib/products'
 import type { Product } from '@/types'
@@ -11,12 +13,15 @@ type Props = {
 }
 
 export function ProductCarousel({ product }: Props) {
-  const images = [...(product.product_images ?? [])]
-    .sort((a, b) => a.sort_order - b.sort_order)
+  const images = [...(product.product_images ?? [])].sort(
+    (a, b) => a.sort_order - b.sort_order
+  )
 
   const [activeIndex, setActiveIndex] = useState(0)
   const [touchStart, setTouchStart] = useState(0)
   const [touchEnd, setTouchEnd] = useState(0)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+
   const carouselRef = useRef<HTMLDivElement>(null)
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -54,7 +59,9 @@ export function ProductCarousel({ product }: Props) {
     )
   }
 
-  const activeImageUrl = getProductImageUrl(images[activeIndex]?.image_path)
+  const activeImageUrl = getProductImageUrl(
+    images[activeIndex]?.image_path
+  )
 
   return (
     <div className="flex gap-3">
@@ -62,6 +69,7 @@ export function ProductCarousel({ product }: Props) {
         <div className="hidden md:flex flex-col gap-2 w-16 flex-shrink-0">
           {images.map((img, i) => {
             const thumbUrl = getProductImageUrl(img.image_path)
+
             if (!thumbUrl) return null
 
             return (
@@ -93,7 +101,8 @@ export function ProductCarousel({ product }: Props) {
           ref={carouselRef}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
-          className="relative aspect-[3/4] overflow-hidden bg-gray-100 group"
+          onClick={() => setLightboxOpen(true)}
+          className="relative aspect-[3/4] overflow-hidden bg-gray-100 group cursor-zoom-in"
         >
           {activeImageUrl && (
             <Image
@@ -106,23 +115,31 @@ export function ProductCarousel({ product }: Props) {
             />
           )}
 
-          {product.discount_percent != null && product.discount_percent > 0 && (
-            <div className="absolute top-2 left-2 bg-white text-black text-xs tracking-widest uppercase font-light px-2 py-1 z-10">
-              -{product.discount_percent}%
-            </div>
-          )}
+          {product.discount_percent != null &&
+            product.discount_percent > 0 && (
+              <div className="absolute top-2 left-2 bg-white text-black text-xs tracking-widest uppercase font-light px-2 py-1 z-10">
+                -{product.discount_percent}%
+              </div>
+            )}
 
           {images.length > 1 && (
             <>
               <button
-                onClick={goToPrevious}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  goToPrevious()
+                }}
                 className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 transition-all duration-200 z-20 backdrop-blur-sm"
                 aria-label="Previous image"
               >
                 <ChevronLeft size={20} />
               </button>
+
               <button
-                onClick={goToNext}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  goToNext()
+                }}
                 className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 transition-all duration-200 z-20 backdrop-blur-sm"
                 aria-label="Next image"
               >
@@ -154,6 +171,15 @@ export function ProductCarousel({ product }: Props) {
               {activeIndex + 1} / {images.length}
             </span>
           </div>
+        )}
+
+        {activeImageUrl && (
+          <ImageLightbox
+            src={activeImageUrl}
+            alt={product.name}
+            open={lightboxOpen}
+            onClose={() => setLightboxOpen(false)}
+          />
         )}
       </div>
     </div>

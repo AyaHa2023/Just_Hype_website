@@ -5,6 +5,7 @@ import { FeaturedProducts } from '@/components/catalog/ProductGrid'
 import { Footer } from '@/components/layout/Footer'
 import { Header } from '@/components/layout/Header'
 import { HeroSection } from '@/components/layout/HeroSection'
+import Image from 'next/image'
 import {
   clothingStoreJsonLd,
   DEFAULT_KEYWORDS,
@@ -81,7 +82,15 @@ export default async function Home() {
       />
       <Header />
       <HeroSection />
-
+{/* <div className="flex justify-center py-10 border-b border-gray-100">
+  <Image
+    src="/images/no_bg_logo.png"
+    alt="Just Hype"
+    width={80}
+    height={80}
+    className="opacity-10 object-contain"
+  />
+</div> */}
       <section className="px-3 sm:px-4 md:px-8 lg:px-16 py-8 sm:py-12 md:py-16">
         <div className="mb-8 md:mb-10">
           <p className="text-xs tracking-[0.3em] uppercase text-gray-400 font-semibold">
